@@ -12,6 +12,7 @@ repositories {
     mavenCentral()
 }
 val reactorVersion = "3.4.6"
+val reactorToolsVersion = "1.0.6.RELEASE"
 val junitVersion = "5.7.1"
 val slf4jVersion = "1.7.30"
 
@@ -22,6 +23,7 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:$slf4jVersion")
 
     // Can change next dependency to testImplementation? 
+    implementation("io.projectreactor.tools:blockhound:$reactorToolsVersion")
     implementation("io.projectreactor:reactor-test:$reactorVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:$junitVersion")

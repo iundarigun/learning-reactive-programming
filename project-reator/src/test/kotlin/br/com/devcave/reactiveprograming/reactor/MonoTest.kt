@@ -1,12 +1,38 @@
 package br.com.devcave.reactiveprograming.reactor
 
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.slf4j.LoggerFactory
+import reactor.blockhound.BlockHound
 import reactor.core.publisher.Mono
+import reactor.core.scheduler.Schedulers
 import reactor.test.StepVerifier
+import java.util.concurrent.FutureTask
+import java.util.concurrent.TimeUnit
 
 class MonoTest {
     private val logger = LoggerFactory.getLogger(javaClass)
+
+    companion object {
+        @BeforeAll
+        @JvmStatic
+        internal fun setUp() {
+            BlockHound.install()
+        }
+    }
+
+    @Test
+    fun blockHoundWorks() {
+        val result = runCatching {
+            val task = FutureTask {
+                Thread.sleep(0)
+            }
+            Schedulers.parallel().schedule(task)
+            task.get(10, TimeUnit.SECONDS)
+        }
+        Assertions.assertTrue(result.isFailure)
+    }
 
     @Test
     fun monoSubscriber() {

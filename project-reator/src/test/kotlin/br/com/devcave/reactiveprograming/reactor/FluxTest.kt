@@ -1,9 +1,11 @@
 package br.com.devcave.reactiveprograming.reactor
 
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.reactivestreams.Subscriber
 import org.reactivestreams.Subscription
 import org.slf4j.LoggerFactory
+import reactor.blockhound.BlockHound
 import reactor.core.publisher.BaseSubscriber
 import reactor.core.publisher.Flux
 import reactor.test.StepVerifier
@@ -12,6 +14,14 @@ import java.time.Duration
 class FluxTest {
 
     private val logger = LoggerFactory.getLogger(javaClass)
+
+    companion object {
+        @BeforeAll
+        @JvmStatic
+        internal fun setUp() {
+            BlockHound.install()
+        }
+    }
 
     @Test
     fun fluxSubscriber() {
@@ -239,7 +249,7 @@ class FluxTest {
         StepVerifier
             .create(connectableFlux)
             .then { connectableFlux.subscribe() } // This is need because we define minimum subscribers to start publish
-            .expectNext(1, 2, 3, 5, 6)
+            .expectNext(1, 2, 3, 4, 5)
             .expectComplete()
             .verify()
     }
