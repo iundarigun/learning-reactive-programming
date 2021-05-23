@@ -46,3 +46,41 @@ Implements reactive streams. We have others implementations, like Akka or rxJava
 - Huge range of operators, that allow us to select, filter, transform and combine streams.
 
 https://projectreactor.io/
+
+
+### Operators
+When we have a flow of data, we have some kind of operators that we can use to do something with data before send to the subscriber, or to the next operator. We have the next types:
+
+- Transforming Operators: transform the data and pass to next
+  - buffer: https://rxmarbles.com/#buffer
+  - flatMap: https://raw.github.com/wiki/ReactiveX/RMapOperatorxJava/images/rx-operators/flatMap.png 
+  - groupBy: https://raw.github.com/wiki/ReactiveX/RxJava/images/rx-operators/groupBy.png
+  - map: https://rxmarbles.com/#map
+  - scan: https://rxmarbles.com/#scan
+  - window
+- Filtering Operators: filter stream data
+  - Debounce: Observable wait a time until emit items.
+  - Distinct: https://rxmarbles.com/#distinct
+  - ElementAt
+  - Filter: https://rxmarbles.com/#filter
+  - First
+  - IgnoreElements
+  - Last
+  - Sample
+  - Skip: Ignore the first n elements
+  - SkipLast: Ignore the last n elements
+  - Take: Take the first n elements
+  - TakeLast: Take the last n elements
+- Combining Operators
+  - combineLatest
+  - merge
+  - zip: https://rxmarbles.com/#zip
+- Utility Operators
+  - Delay: Delay to start emiting (only the first element)
+  - do
+  - Timestamp: Adding timestamp information on event
+- Conditional Operators
+  - all
+  - contains
+- Connectable Operators
+

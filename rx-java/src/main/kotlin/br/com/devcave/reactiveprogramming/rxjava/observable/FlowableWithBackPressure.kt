@@ -10,7 +10,6 @@ import java.util.concurrent.atomic.AtomicInteger
 
 fun main() {
     val logger = LoggerFactory.getLogger("FlowableWithBackPressure")
-    "Boolean".length
     val positiveNumberEvents = Flowable.fromIterable(positiveNumbers(1_000_000))
         .repeat()
         .observeOn(Schedulers.newThread(), false, 5)
@@ -45,7 +44,6 @@ fun main() {
         override fun onComplete() {
             logger.info("onComplete")
         }
-
     })
 
     Thread.sleep(100_000)
