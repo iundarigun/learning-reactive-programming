@@ -48,7 +48,7 @@ Implements reactive streams. We have others implementations, like Akka or rxJava
 https://projectreactor.io/
 
 
-### Operators
+### Operators (RxJava)
 When we have a flow of data, we have some kind of operators that we can use to do something with data before send to the subscriber, or to the next operator. We have the next types:
 
 - Transforming Operators: transform the data and pass to next
@@ -84,3 +84,19 @@ When we have a flow of data, we have some kind of operators that we can use to d
   - contains
 - Connectable Operators
 
+To see marble diagram:
+- https://rxmarbles.com
+- http://reactivex.io/RxJava/javadoc/
+- http://reactivex.io/RxJava/javadoc/io/reactivex/Flowable.html
+
+## Spring webflux
+
+Improve logs on intellij:
+![images/bff-overview.jpg](images/intellijConfigDebug.png)
+
+- Flux 
+- Flow with coroutines 
+- List/Any with coroutines
+- Functional controller
+- WebClient reactive
+- Feign reactive
