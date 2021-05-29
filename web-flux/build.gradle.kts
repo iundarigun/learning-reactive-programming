@@ -31,6 +31,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
 	runtimeOnly("io.r2dbc:r2dbc-postgresql")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-debug")
 	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
 	implementation("io.projectreactor.tools:blockhound:$reactorToolsVersion")
 

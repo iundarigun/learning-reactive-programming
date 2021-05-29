@@ -100,3 +100,14 @@ Improve logs on intellij:
 - Functional controller
 - WebClient reactive
 - Feign reactive
+
+Spring do wrapper arround flux and mono objects. The subscribe process is doing on class ServerHttpHandlerAdapter (from package org.springframework.http.reactive)
+
+Kotlin BlockHound:
+- tricky: `implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")`
+```kotlin
+    init {
+        BlockHound.install(CoroutinesBlockHoundIntegration())
+    }
+```
+

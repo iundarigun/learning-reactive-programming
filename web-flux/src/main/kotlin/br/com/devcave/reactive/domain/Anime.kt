@@ -8,6 +8,6 @@ import javax.validation.constraints.NotEmpty
 data class Anime(
     @Id
     val id: Long,
-    @field:NotEmpty
+    @field:NotEmpty(message = "field can not empty")
     val name: String
 )
