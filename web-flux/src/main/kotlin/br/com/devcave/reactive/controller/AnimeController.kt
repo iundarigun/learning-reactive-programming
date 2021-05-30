@@ -4,6 +4,7 @@ import br.com.devcave.reactive.domain.Anime
 import br.com.devcave.reactive.service.AnimeService
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -50,5 +51,11 @@ class AnimeController(
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun save(@PathVariable id: Long, @Valid @RequestBody anime: Anime): Mono<Void> {
         return animeService.update(id, anime)
+    }
+
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun delete(@PathVariable id: Long): Mono<Void> {
+        return animeService.delete(id)
     }
 }

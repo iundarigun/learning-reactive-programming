@@ -55,8 +55,12 @@ class AnimeService(
                     }
                     .switchIfEmpty {
                         animeRepository.save(toSave)
-                        Mono.empty<Void>()
+                            .then()
                     }
             }
     }
+
+    fun delete(id: Long): Mono<Void> =
+        findById(id)
+            .flatMap { animeRepository.delete(it) }
 }

@@ -19,6 +19,8 @@ repositories {
 
 extra["springCloudVersion"] = "2020.0.2"
 val reactorToolsVersion = "1.0.6.RELEASE"
+val fakerVersion = "1.0.2"
+val mockkVersion = "1.11.0"
 
 dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -45,6 +47,8 @@ dependencies {
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
+	testImplementation("com.github.javafaker:javafaker:$fakerVersion")
+	testImplementation("io.mockk:mockk:$mockkVersion")
 }
 
 dependencyManagement {
