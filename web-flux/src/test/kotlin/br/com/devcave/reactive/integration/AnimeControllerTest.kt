@@ -1,6 +1,5 @@
 package br.com.devcave.reactive.integration
 
-import br.com.devcave.reactive.configuration.FakerConfiguration
 import br.com.devcave.reactive.configuration.FakerConfiguration.faker
 import br.com.devcave.reactive.domain.Anime
 import br.com.devcave.reactive.factory.AnimeFactory

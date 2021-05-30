@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory
 import reactor.blockhound.BlockHound
 import reactor.core.publisher.BaseSubscriber
 import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 import reactor.test.StepVerifier
 import java.time.Duration
 
@@ -249,6 +250,21 @@ class FluxTest {
         StepVerifier
             .create(connectableFlux)
             .then { connectableFlux.subscribe() } // This is need because we define minimum subscribers to start publish
+            .expectNext(1, 2, 3, 4, 5)
+            .expectComplete()
+            .verify()
+    }
+
+    @Test
+    fun testingFluxFlatMapWithMono() {
+        val connectableFlux = Flux.fromIterable(listOf(1, 2, 3, 4, 5))
+            .flatMap {
+                Mono.just(it)
+            }
+            .log()
+
+        StepVerifier
+            .create(connectableFlux)
             .expectNext(1, 2, 3, 4, 5)
             .expectComplete()
             .verify()

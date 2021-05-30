@@ -1,6 +1,7 @@
 package br.com.devcave.reactive.service
 
 import br.com.devcave.reactive.configuration.FakerConfiguration.faker
+import br.com.devcave.reactive.domain.Anime
 import br.com.devcave.reactive.factory.AnimeFactory
 import br.com.devcave.reactive.repository.AnimeRepository
 import io.mockk.clearAllMocks
@@ -287,6 +288,67 @@ internal class AnimeServiceTest {
             animeRepository.findByName(request.name)
         }
         verify(exactly = 0) {
+            animeRepository.save(any())
+        }
+    }
+
+    @Test
+    fun `save batch animes successfully`() {
+        val anime = AnimeFactory.build(0)
+        val otherAnime = AnimeFactory.build(0)
+        val request = listOf(anime, otherAnime)
+
+        every {
+            animeRepository.findByName(any())
+        } returns Mono.empty()
+
+        every {
+            animeRepository.save(any())
+        } answers { Mono.just(invocation.args[0] as Anime) }
+
+        StepVerifier.create(animeService.saveAll(request))
+            .expectSubscription()
+            .expectNext(anime)
+            .expectNext(otherAnime)
+            .verifyComplete()
+
+        verify(exactly = 2) {
+            animeRepository.findByName(any())
+        }
+        verify(exactly = 2) {
+            animeRepository.save(any())
+        }
+    }
+
+    @Test
+    fun `save batch an anime that already exists`() {
+        val anime = AnimeFactory.build(0)
+        val otherAnime = AnimeFactory.build(0)
+        val request = listOf(anime, otherAnime)
+
+        every {
+            animeRepository.findByName(anime.name)
+        } returns Mono.empty()
+
+        every {
+            animeRepository.findByName(otherAnime.name)
+        } returns Mono.just(AnimeFactory.build())
+
+        every {
+            animeRepository.save(any())
+        } answers { Mono.just(invocation.args[0] as Anime) }
+
+
+        StepVerifier.create(animeService.saveAll(request))
+            .expectSubscription()
+            .expectNext(anime)
+            .expectError(ResponseStatusException::class.java)
+            .verify()
+
+        verify(exactly = 2) {
+            animeRepository.findByName(any())
+        }
+        verify(exactly = 1) {
             animeRepository.save(any())
         }
     }

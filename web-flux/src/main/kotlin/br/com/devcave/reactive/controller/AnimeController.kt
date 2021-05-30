@@ -4,6 +4,7 @@ import br.com.devcave.reactive.domain.Anime
 import br.com.devcave.reactive.service.AnimeService
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -17,6 +18,7 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import javax.validation.Valid
 
+@Validated
 @RestController
 @RequestMapping("animes")
 class AnimeController(
@@ -47,9 +49,16 @@ class AnimeController(
     fun save(@Valid @RequestBody anime: Anime): Mono<Anime> {
         return animeService.save(anime)
     }
+
+    @PostMapping("batch")
+    @ResponseStatus(HttpStatus.CREATED)
+    fun saveBatch(@Valid @RequestBody animes: List<Anime>): Flux<Anime> {
+        return animeService.saveAll(animes)
+    }
+
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun save(@PathVariable id: Long, @Valid @RequestBody anime: Anime): Mono<Void> {
+    fun update(@PathVariable id: Long, @Valid @RequestBody anime: Anime): Mono<Void> {
         return animeService.update(id, anime)
     }
 

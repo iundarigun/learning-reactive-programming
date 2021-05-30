@@ -5,6 +5,7 @@ import br.com.devcave.reactive.repository.AnimeRepository
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.server.ResponseStatusException
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
@@ -63,4 +64,16 @@ class AnimeService(
     fun delete(id: Long): Mono<Void> =
         findById(id)
             .flatMap { animeRepository.delete(it) }
+
+    @Transactional
+    fun saveAll(animes: List<Anime>): Flux<Anime> {
+        return Flux.fromStream(animes.stream())
+            .flatMap { anime ->
+                animeRepository.findByName(anime.name).flatMap {
+                    Mono.error<Anime>{ ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime already exists") }
+                }.switchIfEmpty {
+                    animeRepository.save(anime.copy(id = 0))
+                }
+            }
+    }
 }

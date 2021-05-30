@@ -6,12 +6,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.runApplication
 import reactor.blockhound.BlockHound
+import reactor.blockhound.integration.BlockHoundIntegration
 
 @SpringBootApplication
 @EnableConfigurationProperties(FlywayProperties::class)
 class WebFluxApplication {
     init {
-        BlockHound.install(CoroutinesBlockHoundIntegration())
+        val javaUUIDintegration = BlockHoundIntegration { builder ->
+            builder.allowBlockingCallsInside("java.util.UUID", "randomUUID")
+        }
+        BlockHound.install(CoroutinesBlockHoundIntegration(), javaUUIDintegration)
     }
 }
 
