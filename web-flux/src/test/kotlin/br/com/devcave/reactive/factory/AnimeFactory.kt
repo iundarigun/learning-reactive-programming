@@ -10,4 +10,7 @@ object AnimeFactory {
             id = id,
             name = faker.funnyName().name()
         )
+
+    fun buildList(size: Int = faker.number().numberBetween(2, 20)): List<Anime> =
+        (1..size).map { build(0) }
 }
