@@ -22,6 +22,7 @@ val reactorToolsVersion = "1.0.6.RELEASE"
 val fakerVersion = "1.0.2"
 val mockkVersion = "1.11.0"
 val testContainersVersion = "1.15.3"
+val openApiVersion = "1.5.9"
 
 dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -30,6 +31,7 @@ dependencies {
 
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
+	implementation("org.springframework.boot:spring-boot-starter-security")
 
 	implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
 	runtimeOnly("io.r2dbc:r2dbc-postgresql")
@@ -46,11 +48,14 @@ dependencies {
 	implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 
+	implementation("org.springdoc:springdoc-openapi-webflux-ui:$openApiVersion")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
 	testImplementation("com.github.javafaker:javafaker:$fakerVersion")
 	testImplementation("io.mockk:mockk:$mockkVersion")
 	testImplementation("org.testcontainers:testcontainers:$testContainersVersion")
+	testImplementation("org.springframework.security:spring-security-test")
 }
 
 dependencyManagement {

@@ -12,10 +12,12 @@ import reactor.blockhound.integration.BlockHoundIntegration
 @EnableConfigurationProperties(FlywayProperties::class)
 class WebFluxApplication {
     init {
-        val javaUUIDintegration = BlockHoundIntegration { builder ->
-            builder.allowBlockingCallsInside("java.util.UUID", "randomUUID")
+        val javaUUIDIntegration = BlockHoundIntegration { builder ->
+            builder.allowBlockingCallsInside("java.util.UUID", "randomUUID") // @Transactional
+                .allowBlockingCallsInside("java.io.InputStream", "readNBytes") // Swagger
+                .allowBlockingCallsInside("java.io.FilterInputStream", "read") // Swagger
         }
-        BlockHound.install(CoroutinesBlockHoundIntegration(), javaUUIDintegration)
+        BlockHound.install(CoroutinesBlockHoundIntegration(), javaUUIDIntegration)
     }
 }
 

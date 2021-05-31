@@ -2,8 +2,13 @@ package br.com.devcave.reactive.controller
 
 import br.com.devcave.reactive.domain.Anime
 import br.com.devcave.reactive.service.AnimeService
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
+import io.swagger.v3.oas.annotations.security.SecurityScheme
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -21,12 +26,18 @@ import javax.validation.Valid
 @Validated
 @RestController
 @RequestMapping("animes")
+@SecurityScheme(
+    name = "BasicAuth",
+    type = SecuritySchemeType.HTTP,
+    scheme = "basic"
+)
 class AnimeController(
     private val animeService: AnimeService
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
     @GetMapping
+    @Operation(security = [SecurityRequirement(name = "BasicAuth")])
     fun getAll(): Flux<Anime> {
         logger.info("getAll")
         return animeService.findAll()
@@ -39,6 +50,7 @@ class AnimeController(
     }
 
     @GetMapping("{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     fun findById(@PathVariable id: Long): Mono<Anime> {
         logger.info("findById")
         return animeService.findById(id)

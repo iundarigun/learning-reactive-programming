@@ -338,7 +338,6 @@ internal class AnimeServiceTest {
             animeRepository.save(any())
         } answers { Mono.just(invocation.args[0] as Anime) }
 
-
         StepVerifier.create(animeService.saveAll(request))
             .expectSubscription()
             .expectNext(anime)

@@ -67,10 +67,10 @@ class AnimeService(
 
     @Transactional
     fun saveAll(animes: List<Anime>): Flux<Anime> {
-        return Flux.fromStream(animes.stream())
+        return Flux.fromIterable(animes)
             .flatMap { anime ->
                 animeRepository.findByName(anime.name).flatMap {
-                    Mono.error<Anime>{ ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime already exists") }
+                    Mono.error<Anime> { ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime already exists") }
                 }.switchIfEmpty {
                     animeRepository.save(anime.copy(id = 0))
                 }

@@ -1,6 +1,7 @@
 package br.com.devcave.reactive.integration
 
 import br.com.devcave.reactive.configuration.FakerConfiguration.faker
+import br.com.devcave.reactive.configuration.WebClientHelper
 import br.com.devcave.reactive.domain.Anime
 import br.com.devcave.reactive.factory.AnimeFactory
 import br.com.devcave.reactive.repository.AnimeRepository
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
+import org.springframework.security.test.context.support.WithUserDetails
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
 import org.springframework.web.reactive.function.BodyInserters
@@ -24,8 +26,12 @@ import java.util.concurrent.TimeUnit
 @AutoConfigureWebTestClient
 class AnimeControllerTest(
     private val testClient: WebTestClient,
+    private val webClientHelper: WebClientHelper,
     private val animeRepository: AnimeRepository
 ) {
+    // Differents ways to do login
+    private val userTestClient = webClientHelper.createWebTest("user", "devcave")
+    private val adminTestClient = webClientHelper.createWebTest("admin", "devcave")
 
     @AfterEach
     fun deleteDatabase() {
@@ -45,6 +51,7 @@ class AnimeControllerTest(
     }
 
     @Test
+    @WithUserDetails("user")
     fun `listAll returns a flux of anime successfully`() {
         val buildList = AnimeFactory.buildList().map { animeRepository.save(it).block() }
 
@@ -63,7 +70,7 @@ class AnimeControllerTest(
     fun `listAll returns a flux of anime successfully V2`() {
         val buildList = AnimeFactory.buildList().map { animeRepository.save(it).block() }
 
-        testClient
+        userTestClient
             .get()
             .uri("/animes")
             .exchange()
@@ -75,6 +82,7 @@ class AnimeControllerTest(
     }
 
     @Test
+    @WithUserDetails("admin")
     fun `findById returns an anime successfully`() {
         val anime = requireNotNull(AnimeFactory
             .buildList(1)
@@ -94,7 +102,7 @@ class AnimeControllerTest(
     fun `findById returns an error when does not exist`() {
         val id = faker.number().numberBetween(10_000L, 100_000L)
 
-        testClient
+        adminTestClient
             .get()
             .uri("/animes/{id}", id)
             .exchange()
@@ -107,7 +115,7 @@ class AnimeControllerTest(
     fun `save creates an anime successfully`() {
         val anime = AnimeFactory.build(0)
 
-        testClient
+        adminTestClient
             .post()
             .uri("/animes/")
             .contentType(MediaType.APPLICATION_JSON)
@@ -122,7 +130,7 @@ class AnimeControllerTest(
     fun `save returns bad request when name is empty`() {
         val anime = Anime(id = 0, name = "")
 
-        testClient
+        adminTestClient
             .post()
             .uri("/animes/")
             .contentType(MediaType.APPLICATION_JSON)
