@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: web-flux
+  r2dbc:
+    url: r2dbc:postgresql://localhost:55432/test
+    username: test
+    password: test
+
+flyway:
+  url: postgresql://localhost:55432/test
+  username: test
+  password: test
+
+logging:
+  level:
+    io.r2dbc.postgresql.QUERY: DEBUG # for queries
+    io.r2dbc.postgresql.PARAM: DEBUG # for parameters

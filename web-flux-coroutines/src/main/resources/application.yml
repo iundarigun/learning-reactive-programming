@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: web-flux
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/webflux
+    username: webflux
+    password: webflux
+
+flyway:
+  url: postgresql://localhost:5432/webflux
+  username: webflux
+  password: webflux
+
+logging:
+  level:
+    io.r2dbc.postgresql.QUERY: DEBUG # for queries
+    io.r2dbc.postgresql.PARAM: DEBUG # for parameters
+
+server:
+  port: 1980
+  error:
+    include-stacktrace: on_param # <url>?trace=true
