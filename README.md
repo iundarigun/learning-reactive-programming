@@ -94,13 +94,6 @@ To see marble diagram:
 Improve logs on intellij:
 ![images/bff-overview.jpg](images/intellijConfigDebug.png)
 
-- Flux 
-- Flow with coroutines 
-- List/Any with coroutines
-- Functional controller
-- WebClient reactive
-- Feign reactive
-
 Spring do wrapper arround flux and mono objects. The subscribe process is doing on class ServerHttpHandlerAdapter (from package org.springframework.http.reactive)
 
 Kotlin BlockHound:
@@ -110,6 +103,13 @@ Kotlin BlockHound:
         BlockHound.install(CoroutinesBlockHoundIntegration())
     }
 ```
+
+### Next studies
+- Flow with coroutines 
+- List/Any with coroutines
+- Functional controller
+- Feign reactive
+
 
 ## Folders on repository
 - [rxjava](rx-java): Project using RxJava based on [udemy course rxJava2](https://www.udemy.com/course/rxjava_2)
