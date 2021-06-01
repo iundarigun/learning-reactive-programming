@@ -6,6 +6,7 @@ import br.com.devcave.reactive.domain.Anime
 import br.com.devcave.reactive.factory.AnimeFactory
 import br.com.devcave.reactive.repository.AnimeRepository
 import kotlinx.coroutines.debug.CoroutinesBlockHoundIntegration
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeAll
@@ -35,7 +36,9 @@ class AnimeControllerTest(
 
     @AfterEach
     fun deleteDatabase() {
-        animeRepository.deleteAll().subscribe()
+        runBlocking {
+            animeRepository.deleteAll()
+        }
     }
 
     @Test
@@ -53,7 +56,9 @@ class AnimeControllerTest(
     @Test
     @WithUserDetails("user")
     fun `listAll returns a flux of anime successfully`() {
-        val buildList = AnimeFactory.buildList().map { animeRepository.save(it).block() }
+        val buildList = AnimeFactory.buildList().map {
+            runBlocking { animeRepository.save(it) }
+        }
 
         testClient
             .get()
@@ -62,13 +67,15 @@ class AnimeControllerTest(
             .expectStatus()
             .is2xxSuccessful
             .expectBody()
-            .jsonPath("$.[0].id").isEqualTo(requireNotNull(buildList[0]?.id))
-            .jsonPath("$.[0].name").isEqualTo(requireNotNull(buildList[0]?.name))
+            .jsonPath("$.[0].id").isEqualTo(requireNotNull(buildList[0].id))
+            .jsonPath("$.[0].name").isEqualTo(requireNotNull(buildList[0].name))
     }
 
     @Test
     fun `listAll returns a flux of anime successfully V2`() {
-        val buildList = AnimeFactory.buildList().map { animeRepository.save(it).block() }
+        val buildList = AnimeFactory.buildList().map {
+            runBlocking { animeRepository.save(it) }
+        }
 
         userTestClient
             .get()
@@ -86,7 +93,7 @@ class AnimeControllerTest(
     fun `findById returns an anime successfully`() {
         val anime = requireNotNull(AnimeFactory
             .buildList(1)
-            .map { animeRepository.save(it).block() }
+            .map { runBlocking { animeRepository.save(it) } }
             .first())
 
         testClient

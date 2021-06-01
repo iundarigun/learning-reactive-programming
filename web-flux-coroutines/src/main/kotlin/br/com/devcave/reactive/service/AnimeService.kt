@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.server.ResponseStatusException
 import reactor.core.publisher.Flux
-import reactor.core.publisher.Mono
-import reactor.kotlin.core.publisher.switchIfEmpty
 
 @Service
 class AnimeService(
@@ -27,9 +25,8 @@ class AnimeService(
     }
 
     @Transactional(readOnly = true)
-    suspend fun findByName(name: String): Anime {
-        return animeRepository.findByName(name)
-    }
+    suspend fun findByName(name: String): Anime =
+        animeRepository.findByName(name) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Anime not found")
 
     @Transactional(readOnly = true)
     suspend fun findById(id: Long): Anime {

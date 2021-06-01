@@ -17,7 +17,7 @@ class WebFluxCoroutinesApplication {
                 .allowBlockingCallsInside("java.io.InputStream", "readNBytes") // Swagger
                 .allowBlockingCallsInside("java.io.FilterInputStream", "read") // Swagger
         }
-//        BlockHound.install(CoroutinesBlockHoundIntegration(), javaUUIDIntegration)
+        BlockHound.install(CoroutinesBlockHoundIntegration(), javaUUIDIntegration)
     }
 }
 

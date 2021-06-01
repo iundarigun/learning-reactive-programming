@@ -4,7 +4,7 @@ import br.com.devcave.reactive.domain.Anime
 import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 
 interface AnimeRepository : CoroutineCrudRepository<Anime, Long> {
-    suspend fun findByName(name: String): Anime
+    suspend fun findByName(name: String): Anime?
 
     suspend fun existsByName(name: String): Boolean
 
