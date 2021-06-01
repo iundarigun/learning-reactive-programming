@@ -104,9 +104,10 @@ Kotlin BlockHound:
     }
 ```
 
+For Kotlin, we have problems using bean validations' annotation `@Validated`. Is not supported with coroutines: https://github.com/spring-projects/spring-framework/issues/23152
+
+
 ### Next studies
-- Flow with coroutines 
-- List/Any with coroutines
 - Functional controller
 - Feign reactive
 
@@ -115,3 +116,11 @@ Kotlin BlockHound:
 - [rxjava](rx-java): Project using RxJava based on [udemy course rxJava2](https://www.udemy.com/course/rxjava_2)
 - [project-reator](project-reactor): Project using Reactor based on [DevDojo youtube course](https://www.youtube.com/playlist?list=PL62G310vn6nG3sBMCIEoZBK3r3E_4aKW5)
 - [web-flux](web-flux): Project using WebFlux based on [DevDojo youtube course](https://www.youtube.com/watch?v=uLFU5Uou5t4&list=PL62G310vn6nH5Tgcp5q2a1xCb6CsZJAi7) 
+- [web-flux-coroutines](web-flux-coroutines): Project with webflux using flow and coroutines
+
+## References
+- DevDojo: https://devdojo.academy/#Cursos
+- Rx Java on udemy: https://www.udemy.com/course/rxjava_2
+- Marble diagrams: https://rxmarbles.com
+- Blog Spring about kotlin coroutines: https://spring.io/blog/2019/04/12/going-reactive-with-spring-coroutines-and-kotlin-flow
+- Medium coroutines: https://medium.com/@tienisto/asynchronous-spring-using-kotlin-coroutines-and-r2dbc-93b3a079ac22
