@@ -106,6 +106,15 @@ Kotlin BlockHound:
 
 For Kotlin, we have problems using bean validations' annotation `@Validated`. Is not supported with coroutines: https://github.com/spring-projects/spring-framework/issues/23152
 
+## Coroutines
+It is a design pattern of concurrency that kotlin uses to simplify the asynchronous executions.Is is a light thread, so not necessary create a new thread for every coroutine, using groups of subprocesses. It can be suspend and reactive by necessity.
+
+The Scope of a launch coroutine is the lifecycle of coroutines. GlobalScope is scope that during all the time of application, but is not recomended to use in production
+
+To run code in coroutines, we can use `GlobalScope.launch{}` for executions without wait for the result and `async{}.await()` to wait for result.
+
+Job is a cancelable element with a lifecycle finalishing at the end of the execution. It doesn't return a value
+
 
 ### Next studies
 - Functional controller
@@ -113,10 +122,10 @@ For Kotlin, we have problems using bean validations' annotation `@Validated`. Is
 
 
 ## Folders on repository
-- [rxjava](rx-java): Project using RxJava based on [udemy course rxJava2](https://www.udemy.com/course/rxjava_2)
-- [project-reator](project-reactor): Project using Reactor based on [DevDojo youtube course](https://www.youtube.com/playlist?list=PL62G310vn6nG3sBMCIEoZBK3r3E_4aKW5)
-- [web-flux](web-flux): Project using WebFlux based on [DevDojo youtube course](https://www.youtube.com/watch?v=uLFU5Uou5t4&list=PL62G310vn6nH5Tgcp5q2a1xCb6CsZJAi7) 
-- [web-flux-coroutines](web-flux-coroutines): Project with webflux using flow and coroutines
+- rxjava: Project using RxJava based on [udemy course rxJava2](https://www.udemy.com/course/rxjava_2)
+- project-reator: Project using Reactor based on [DevDojo youtube course](https://www.youtube.com/playlist?list=PL62G310vn6nG3sBMCIEoZBK3r3E_4aKW5)
+- web-flux: Project using WebFlux based on [DevDojo youtube course](https://www.youtube.com/watch?v=uLFU5Uou5t4&list=PL62G310vn6nH5Tgcp5q2a1xCb6CsZJAi7) 
+- web-flux-coroutines: Project with webflux using flow and coroutines
 
 ## References
 - DevDojo: https://devdojo.academy/#Cursos

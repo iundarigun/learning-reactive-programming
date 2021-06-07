@@ -3,6 +3,7 @@ package br.com.devcave.reactive.service
 import br.com.devcave.reactive.domain.Anime
 import br.com.devcave.reactive.repository.AnimeRepository
 import org.slf4j.LoggerFactory
+import org.springframework.data.domain.PageRequest
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -20,6 +21,11 @@ class AnimeService(
     fun findAll(): Flux<Anime> {
         logger.info("findAll on service")
         return animeRepository.findAll()
+    }
+
+    fun findAllPaginate(page: Int = 0): Flux<Anime> {
+        val pageable = PageRequest.of(page, 5)
+        return animeRepository.findBy(pageable)
     }
 
     fun findByName(name: String): Mono<Anime> {

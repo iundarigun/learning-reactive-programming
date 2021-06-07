@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.security.SecurityScheme
+import kotlinx.coroutines.flow.Flow
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.security.access.prepost.PreAuthorize
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
@@ -41,6 +43,12 @@ class AnimeController(
     fun getAll(): Flux<Anime> {
         logger.info("getAll")
         return animeService.findAll()
+    }
+
+    @GetMapping("/pagination")
+    fun getPagination(@RequestParam(required = false, defaultValue = "0") page: Int): Flux<Anime> {
+        logger.info("getPagination")
+        return animeService.findAllPaginate(page)
     }
 
     @GetMapping("name/{name}")
