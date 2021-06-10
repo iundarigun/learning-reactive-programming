@@ -126,6 +126,7 @@ Job is a cancelable element with a lifecycle finalishing at the end of the execu
 - project-reator: Project using Reactor based on [DevDojo youtube course](https://www.youtube.com/playlist?list=PL62G310vn6nG3sBMCIEoZBK3r3E_4aKW5)
 - web-flux: Project using WebFlux based on [DevDojo youtube course](https://www.youtube.com/watch?v=uLFU5Uou5t4&list=PL62G310vn6nH5Tgcp5q2a1xCb6CsZJAi7) 
 - web-flux-coroutines: Project with webflux using flow and coroutines
+- coroutines: Project using coroutines based on [udemy course Kotlin coroutines](https://www.udemy.com/course/kotlin-coroutines-aprende-programacion-asincrona-en-kotlin/)
 
 ## References
 - DevDojo: https://devdojo.academy/#Cursos
@@ -133,3 +134,4 @@ Job is a cancelable element with a lifecycle finalishing at the end of the execu
 - Marble diagrams: https://rxmarbles.com
 - Blog Spring about kotlin coroutines: https://spring.io/blog/2019/04/12/going-reactive-with-spring-coroutines-and-kotlin-flow
 - Medium coroutines: https://medium.com/@tienisto/asynchronous-spring-using-kotlin-coroutines-and-r2dbc-93b3a079ac22
+- Coroutines udemy course: https://www.udemy.com/course/kotlin-coroutines-aprende-programacion-asincrona-en-kotlin/
